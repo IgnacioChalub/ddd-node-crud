@@ -1,5 +1,5 @@
 import IIdGenerator from "../../aplication/infrastructureServices/idGenerator";
-import { randomUUID } from "crypto";
+import {randomUUID} from "crypto";
 
 class IdGeneratorService implements IIdGenerator{
 
