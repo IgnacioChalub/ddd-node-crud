@@ -8,7 +8,7 @@ const loginAccountController = async (req: Request, res: Response) => {
     try {
         const loginAccountService: LoginAccountService = aplicationServices.loginAccountService;
         const token: string = await loginAccountService.logIn(username, password);
-        res.status(200).header('auth-token', token);
+        res.status(200).header('auth-token', token).send();
     }catch (e: any) {
         res.status(400).json({error: e.message}).send();
     }

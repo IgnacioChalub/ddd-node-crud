@@ -10,7 +10,7 @@ class JWTLogger implements ILogger{
     }
 
     login(userId: string): string {
-        return jwt.sign({_id: userId},'secretiveness', {
+        return jwt.sign({_id: userId}, 'secretiveness', {
             expiresIn: 60 * 60 * 24 // 24 hours
         });
     }

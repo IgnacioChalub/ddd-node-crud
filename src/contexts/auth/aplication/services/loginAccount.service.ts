@@ -20,7 +20,8 @@ class LoginAccountService{
     }
 
     async logIn(username: string, password: string): Promise<string>{
-        const account: Account = await this.accountRepository.getAccountByUsername(username);
+        const account: Account =  Account.createFromJson( await this.accountRepository.getAccountByUsername(username));
+        console.log(account);
         if(!account) throw Error('Account not found');
         if(!await this.passwordComparator.compare(password, account.getPassword())) throw Error('Incorrect password');
         return this.logger.login(account.getId());

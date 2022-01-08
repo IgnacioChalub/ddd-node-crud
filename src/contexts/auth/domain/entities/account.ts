@@ -1,4 +1,5 @@
-export class Account{
+
+export class Account {
 
     private readonly id: string;
     private username: string;
@@ -20,27 +21,31 @@ export class Account{
         return new Account(id, username, email, password, createdAt, updatedAt);
     }
 
-    getId(): string{
+    public static createFromJson(json: any): Account{
+        return Account.create(json.id, json.username, json.email, json.password, json.createdAt, json.updatedAt);
+    }
+
+    public getId(): string{
         return this.id;
     }
 
-    getUsername(): string{
+    public getUsername(): string{
         return this.username;
     }
 
-    getEmail(): string{
+    public getEmail(): string{
         return this.email;
     }
 
-    getPassword(): string{
+    public getPassword(): string{
         return this.password;
     }
 
-    getCreatedAt(): Date{
+    public getCreatedAt(): Date{
         return this.createdAt;
     }
 
-    getUpdatedAt(): Date{
+    public getUpdatedAt(): Date{
         return this.updatedAt;
     }
 
