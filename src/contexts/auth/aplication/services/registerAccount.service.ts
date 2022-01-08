@@ -25,7 +25,9 @@ class RegisterAccountService {
         do{
             id =  this.idGenerator.generateId();
             account = await this.accountRepository.getAccountById(id);
-        }while (account)
+        }while (account);
+
+
 
         if(await this.accountRepository.getAccountByUsername(username)) throw Error('Username already exists');
         if(await this.accountRepository.getAccountByEmail(email)) throw Error('Email already used');

@@ -1,4 +1,5 @@
 import IIdGenerator from "../../aplication/infrastructureServices/idGenerator";
+import { randomUUID } from "crypto";
 
 class IdGeneratorService implements IIdGenerator{
 
@@ -9,9 +10,7 @@ class IdGeneratorService implements IIdGenerator{
     }
 
     generateId(): string {
-        const uuid = require('uuid');
-        const newUuid = uuid.v4();
-        return newUuid.getDashFreeUUID();
+        return randomUUID();
     }
 }
 

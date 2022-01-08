@@ -28,7 +28,9 @@ class CreateAccountDomainService extends ObservableService{
 
         this.notify(AccountCreatedEvent.create(username, email));
 
-        return Account.create(id, username, email, encryptedPassword);
+        const date = new Date();
+
+        return Account.create(id, username, email, encryptedPassword, date, date);
     }
 
 }
