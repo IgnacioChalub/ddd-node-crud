@@ -5,13 +5,12 @@ import AccountCreatedEvent from "../events/AccountCreatedEvent";
 import SuscribableService from "../../../shared/domain/services/suscribableService";
 import Messager from "../../../shared/aplication/messagers/messager";
 
-class CreateAccountDomainService extends SuscribableService{
+class CreateAccountDomainService {
 
-    emailValidator: IEmailValidator;
-    encrypter: IEncrypter;
+    private emailValidator: IEmailValidator;
+    private encrypter: IEncrypter;
 
     private constructor(emailValidator: IEmailValidator, encrypter: IEncrypter, messager: Messager) {
-        super(messager);
         this.emailValidator = emailValidator;
         this.encrypter = encrypter;
     }
@@ -20,7 +19,7 @@ class CreateAccountDomainService extends SuscribableService{
         return new CreateAccountDomainService(emailValidator, encrypter, messager);
     }
 
-    createAccount(id:string, username: string, email: string, password: string): Account {
+    createAccount(id:string, username: string, email: string, password: string, firstName: string, lastName: string, birthdate: Date): Account {
 
         if(password.length < 7) throw Error('Password must have at least 7 characters');
         if(!this.emailValidator.isValid(email)) throw Error('Email not valid');
@@ -28,9 +27,7 @@ class CreateAccountDomainService extends SuscribableService{
         const encryptedPassword = this.encrypter.encrypt(password);
         const date = new Date();
 
-        this.notify(AccountCreatedEvent.create(username, email, date));
-
-        return Account.create(id, username, email, encryptedPassword, date, date);
+        return Account.create(id, username, email, encryptedPassword, firstName, lastName, birthdate, true, date, date);
     }
 
 }

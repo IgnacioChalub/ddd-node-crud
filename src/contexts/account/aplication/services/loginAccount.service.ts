@@ -24,6 +24,7 @@ class LoginAccountService{
         console.log(account);
         if(!account) throw Error('Account not found');
         if(!await this.passwordComparator.compare(password, account.getPassword())) throw Error('Incorrect password');
+        if(!account.isActive()) throw Error('Complete registration');
         return this.logger.login(account.getId());
     }
 

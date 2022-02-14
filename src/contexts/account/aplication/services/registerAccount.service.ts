@@ -19,7 +19,7 @@ class RegisterAccountService {
         return new RegisterAccountService(accountRepository, createAccountDomainService, idGenerator);
     }
 
-    async registerAccount(username: string, email: string, password: string): Promise<string> {
+    async registerAccount(username: string, email: string, password: string, firstName: string, lastName: string, birthdate: Date): Promise<string> {
         let account: Account;
         let id: string;
         do{
@@ -30,7 +30,7 @@ class RegisterAccountService {
         if(await this.accountRepository.getAccountByUsername(username)) throw Error('Username already exists');
         if(await this.accountRepository.getAccountByEmail(email)) throw Error('Email already used');
 
-        const newAccount: Account = this.createAccountDomainService.createAccount(id, username, email, password);
+        const newAccount: Account = this.createAccountDomainService.createAccount(id, username, email, password, firstName, lastName, birthdate);
 
         await this.accountRepository.registerAccount(newAccount)
 

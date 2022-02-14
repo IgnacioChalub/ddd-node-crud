@@ -1,7 +1,7 @@
 import express, {Application} from "express";
 import bodyParser from "body-parser";
 //import routes
-import {authRouter} from "./contexts/auth/infrastructure/router/auth.router";
+import {authRouter} from "./contexts/account/infrastructure/router/auth.router";
 
 const app: Application = express();
 const PORT = 3000

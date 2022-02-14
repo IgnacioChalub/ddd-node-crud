@@ -2,7 +2,7 @@ import Messager from "../../aplication/messagers/messager";
 
 abstract class SuscribableServices{
 
-    messager: Messager;
+   private  messager: Messager;
 
     constructor(messager: Messager) {
         this.messager = messager;

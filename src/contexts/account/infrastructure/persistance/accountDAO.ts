@@ -44,6 +44,10 @@ export class AccountDAO implements IAccountRepository{
                 username: account.getUsername(),
                 email: account.getEmail(),
                 password: account.getPassword(),
+                firstName: account.getFirstName(),
+                lastName: account.getLastName(),
+                birthdate: account.getBirthday(),
+                active: account.isActive(),
                 createdAt: account.getCreatedAt(),
                 updatedAt: account.getUpdatedAt()
             }).returning('*');
