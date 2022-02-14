@@ -5,12 +5,12 @@ export class Account {
     private readonly username: string;
     private readonly email: string;
     private readonly password: string;
-    private firstName: string;
-    private lastName: string;
-    private birthdate: Date;
-    private active: boolean;
+    private readonly firstName: string;
+    private readonly lastName: string;
+    private readonly birthdate: Date;
+    private readonly active: boolean;
     private readonly createdAt: Date;
-    private updatedAt: Date;
+    private readonly updatedAt: Date;
 
     private constructor(id: string, username: string, email: string, password: string, firstName: string, lastName: string, birthdate: Date, active: boolean, createdAt: Date, updatedAt: Date) {
         this.id = id;

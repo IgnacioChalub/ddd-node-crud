@@ -26,7 +26,7 @@ export class AccountDAO implements IAccountRepository{
             });
     }
 
-    async getAccountByUsername(username: string): Promise<Account> {
+    async getAccountByUsername(username: string): Promise<JSON> {
         return await db
             .select("*")
             .from("account")
@@ -46,7 +46,7 @@ export class AccountDAO implements IAccountRepository{
                 password: account.getPassword(),
                 firstName: account.getFirstName(),
                 lastName: account.getLastName(),
-                birthdate: account.getBirthday(),
+                birthday: account.getBirthday(),
                 active: account.isActive(),
                 createdAt: account.getCreatedAt(),
                 updatedAt: account.getUpdatedAt()

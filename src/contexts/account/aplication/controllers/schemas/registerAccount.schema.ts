@@ -6,7 +6,7 @@ const registerAccountSchema = yup.object().shape({
     password: yup.string().required("password required"),
     firstName: yup.string().required("first name required"),
     lastName: yup.string().required("last name required"),
-    birthdate: yup.date().required("birthdate required"),
+    birthdate: yup.string().required("birthdate required"),
 });
 
 export default registerAccountSchema;
