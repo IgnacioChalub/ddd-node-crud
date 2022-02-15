@@ -12,7 +12,7 @@ class RegisterAccountService {
     private constructor(accountRepository: IAccountRepository, createAccountDomainService: CreateAccountDomainService, idGenerator: IIdGenerator) {
         this.accountRepository = accountRepository;
         this.createAccountDomainService = createAccountDomainService;
-        this. idGenerator = idGenerator;
+        this.idGenerator = idGenerator;
     }
 
     static create(accountRepository: IAccountRepository, createAccountDomainService: CreateAccountDomainService, idGenerator: IIdGenerator): RegisterAccountService{

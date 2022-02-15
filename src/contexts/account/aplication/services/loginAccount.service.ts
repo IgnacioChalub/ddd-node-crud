@@ -9,7 +9,7 @@ class LoginAccountService{
     private passwordComparator: IPasswordComparator;
     private logger: ILogger;
 
-    constructor(accountRepository: IAccountRepository, passwordComparator: IPasswordComparator, logger: ILogger) {
+    private constructor(accountRepository: IAccountRepository, passwordComparator: IPasswordComparator, logger: ILogger) {
         this.accountRepository = accountRepository;
         this.passwordComparator = passwordComparator;
         this.logger = logger;
@@ -24,7 +24,7 @@ class LoginAccountService{
         if(!accountJson) throw Error('Account not found');
         const account: Account =  Account.createFromJson(accountJson);
         if(!await this.passwordComparator.compare(password, account.getPassword())) throw Error('Incorrect password');
-        if(!account.isActive()) throw Error('Complete registration');
+        if(!account.isActive()) throw Error('Could not access account');
         return this.logger.login(account.getId());
     }
 
