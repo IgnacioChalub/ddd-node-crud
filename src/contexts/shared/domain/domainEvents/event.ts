@@ -1,6 +1,5 @@
-
 interface IEvent{
-    raisedAt: Date;
+     raisedAt: Date;
 }
 
 export default IEvent;

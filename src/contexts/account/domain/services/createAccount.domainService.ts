@@ -1,19 +1,25 @@
-import {Account} from "../entities/account";
 import IEmailValidator from "../infrastructureServices/emailValidator";
 import IEncrypter from "../infrastructureServices/encrypter";
+import Account from "../entities/account";
+import IPublisher from "../../../shared/domain/publisher/publisher";
+import IEvent from "../../../shared/domain/domainEvents/event";
+import RegisterAccountDomainEvent from "../domainEvents/registerAccountDomainEvent";
 
 class CreateAccountDomainService {
 
     private emailValidator: IEmailValidator;
     private encrypter: IEncrypter;
+    private publisher: IPublisher;
 
-    private constructor(emailValidator: IEmailValidator, encrypter: IEncrypter) {
+
+    constructor(emailValidator: IEmailValidator, encrypter: IEncrypter, publisher: IPublisher) {
         this.emailValidator = emailValidator;
         this.encrypter = encrypter;
+        this.publisher = publisher;
     }
 
-    static create(emailValidator: IEmailValidator, encrypter: IEncrypter){
-        return new CreateAccountDomainService(emailValidator, encrypter);
+    static create(emailValidator: IEmailValidator, encrypter: IEncrypter, publisher: IPublisher){
+        return new CreateAccountDomainService(emailValidator, encrypter, publisher);
     }
 
     createAccount(id:string, username: string, email: string, password: string, firstName: string, lastName: string, birthdate: Date): Account {
@@ -24,7 +30,10 @@ class CreateAccountDomainService {
         const encryptedPassword = this.encrypter.encrypt(password);
         const date = new Date();
 
-        return Account.register(id, username, email, encryptedPassword, firstName, lastName, birthdate, true, date, date);
+        const event: RegisterAccountDomainEvent = Account.register(id, username, email, encryptedPassword, firstName, lastName, birthdate, true, date, date);
+        this.publisher.publish(event);
+
+        return event.getAccount();
     }
 
 }

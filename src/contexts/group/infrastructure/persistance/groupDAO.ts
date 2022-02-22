@@ -1,30 +1,19 @@
 import IGroupRepository from "../../aplication/repositories/group.repository";
-import {Group} from "../../domain/entities/group";
 // @ts-ignore
 import db from "../../../shared/infrastructure/database/database";
+import Group from "../../domain/entities/group";
 
 export class GroupDAO implements IGroupRepository{
 
-    async createGroup(group: Group): Promise<void> {
-        return await db('group')
-            .insert({
-                id: group.getId(),
-                name: group.getName(),
-                description: group.getDescription(),
-                ownerId: group.getOwnerId(),
-                createdAt: group.getCreatedAt(),
-                updatedAt: group.getUpdatedAt()
-            }).returning('*');
-    }
-
-    async getGroupById(id: string): Promise<any> {
+    async getGroupById(id: string): Promise<Group> {
         return await db
             .select("*")
             .from("group")
             .first()
             .where("id", "=", id)
             .then((response: any) => {
-                return response;
+                if(!response) return response;
+                return this.createGroupFromResponse(response);
             });
     }
 
@@ -32,15 +21,7 @@ export class GroupDAO implements IGroupRepository{
         return Promise.resolve(undefined);
     }
 
-    async save(group: Group): Promise<void> {
-        await db
-            .where("id", "=", group.getId)
-            .update({
-                name: group.getName(),
-                description: group.getDescription(),
-                updatedAt: group.getUpdatedAt()
-            })
-
-
+    private createGroupFromResponse(response: any){
+        return Group.create(response.id, response.name, response.description, response.ownerId, response.updatedAt, response.createdAt);
     }
 }

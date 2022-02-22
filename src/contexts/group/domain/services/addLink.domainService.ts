@@ -1,6 +1,6 @@
-import {Group} from "../entities/group";
-import {Link} from "../entities/link";
 import IUrlValidator from "../../aplication/infrastructureServices/urlValidator";
+import Group from "../entities/group";
+import Link from "../entities/link";
 
 class AddLinkDomainService{
 

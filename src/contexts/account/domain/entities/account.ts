@@ -1,8 +1,7 @@
-import Suscribable from "../../../shared/domain/entities/suscribable";
 import RegisterAccountDomainEvent from "../domainEvents/registerAccountDomainEvent";
-import RegisterAccountMessageBus from "../../../shared/aplication/messenger/registerAccountMessageBus";
+import IEvent from "../../../shared/domain/domainEvents/event";
 
-export class Account extends Suscribable{
+class Account {
 
     private id: string;
     private username: string;
@@ -16,7 +15,6 @@ export class Account extends Suscribable{
     private updatedAt: Date;
 
     private constructor(id: string, username: string, email: string, password: string, firstName: string, lastName: string, birthdate: Date, active: boolean, createdAt: Date, updatedAt: Date) {
-        super();
         this.id = id;
         this.username = username;
         this.email = email;
@@ -29,21 +27,14 @@ export class Account extends Suscribable{
         this.updatedAt = updatedAt;
     }
 
-    public static register(id: string, username: string, email: string, password: string, firstName: string, lastName: string, birthdate: Date, active: boolean, createdAt: Date, updatedAt: Date): Account {
-        const account: Account = Account.create(id, username, email, password, firstName, lastName, birthdate, active, createdAt, updatedAt);
-        account.notify(RegisterAccountDomainEvent.raise(account));
-        return account;
-    }
-
-
     public static create(id: string, username: string, email: string, password: string, firstName: string, lastName: string, birthdate: Date, active: boolean, createdAt: Date, updatedAt: Date): Account {
         const account = new Account(id, username, email, password, firstName, lastName, birthdate, active, createdAt, updatedAt);
-        account.addMessageBus(RegisterAccountMessageBus.create());
         return account;
     }
 
-    public static createFromJson(json: any): Account{
-        return Account.create(json.id, json.username, json.email, json.password, json.firstName, json.lastName, json.birthdate, json.active, json.createdAt, json.updatedAt);
+    public static register(id: string, username: string, email: string, password: string, firstName: string, lastName: string, birthdate: Date, active: boolean, createdAt: Date, updatedAt: Date): RegisterAccountDomainEvent {
+        const account: Account = Account.create(id, username, email, password, firstName, lastName, birthdate, active, createdAt, updatedAt);
+        return <RegisterAccountDomainEvent>RegisterAccountDomainEvent.raise(account);
     }
 
     public getId(): string{
@@ -86,6 +77,6 @@ export class Account extends Suscribable{
         return this.birthdate;
     }
 
-
-
 }
+
+export default Account;

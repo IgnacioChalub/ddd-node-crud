@@ -1,8 +1,9 @@
 import IHandler from "../../../shared/aplication/handlers/handler";
 //@ts-ignore
 import db from "../../../shared/infrastructure/database/database";
-import {Account} from "../../domain/entities/account";
+
 import RegisterAccountDomainEvent from "../../domain/domainEvents/registerAccountDomainEvent";
+import Account from "../../domain/entities/account";
 
 class RegisterAccountHandler implements IHandler{
 

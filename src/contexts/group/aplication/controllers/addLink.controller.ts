@@ -1,7 +1,7 @@
 import {Request, Response} from "express";
 import AddLinkAplicationService from "../services/addLink.aplicationService";
 import aplicationServices from "../services";
-import {Group} from "../../domain/entities/group";
+import Group from "../../domain/entities/group";
 
 const addLinkController = async (req: Request, res: Response) => {
     const { title, description, url } = req.body;

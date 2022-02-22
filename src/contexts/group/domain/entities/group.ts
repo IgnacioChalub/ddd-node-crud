@@ -1,6 +1,10 @@
-import {Link} from "./link";
+import Link from "./link";
+import Suscribable from "../../../shared/domain/entities/suscribable";
+import NewGroupDomainEvent from "../events/newGroupDomainEvent";
+import NewGroupMessageBus from "../../../shared/aplication/messenger/newGroupMessageBus";
 
-export class Group{
+
+class Group extends Suscribable{
 
     private id: string;
     private name: string;
@@ -13,6 +17,7 @@ export class Group{
     private createdAt: Date;
 
     private constructor(id: string, name: string, description: string, ownerId: string, updatedAt: Date, createdAt: Date) {
+        super();
         this.id = id;
         this.name = name;
         this.description = description;
@@ -24,9 +29,16 @@ export class Group{
         this.createdAt = createdAt;
     }
 
-    static create(id: string, name: string, description: string, ownerId: string): Group{
-        const date: Date = new Date();
-        return new Group(id, name, description, ownerId, date, date);
+    static create(id: string, name: string, description: string, ownerId: string, updatedAt: Date, createdAt: Date): Group{
+        const group: Group = new Group(id, name, description, ownerId, updatedAt, createdAt);
+        group.addMessageBus(NewGroupMessageBus.create());
+        return group;
+    }
+
+    static new(id: string, name: string, description: string, ownerId: string, updatedAt: Date, createdAt: Date): Group{
+        const group: Group = Group.create(id, name, description, ownerId, updatedAt, createdAt);
+        group.notify(NewGroupDomainEvent.raise(group));
+        return group;
     }
 
     public getId(): string{
@@ -58,3 +70,5 @@ export class Group{
     }
 
 }
+
+export default Group;

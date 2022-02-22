@@ -1,9 +1,10 @@
-import {Account} from "../../domain/entities/account";
+
 import CreateAccountDomainService from "../../domain/services/createAccount.domainService";
 import IAccountRepository from "../repositories/account.repository";
 import IIdGenerator from "../infrastructureServices/idGenerator";
+import Account from "../../domain/entities/account";
 
-class RegisterAccountService {
+class RegisterAccountAplicationService {
 
     private accountRepository: IAccountRepository;
     private createAccountDomainService: CreateAccountDomainService;
@@ -15,8 +16,8 @@ class RegisterAccountService {
         this.idGenerator = idGenerator;
     }
 
-    static create(accountRepository: IAccountRepository, createAccountDomainService: CreateAccountDomainService, idGenerator: IIdGenerator): RegisterAccountService{
-        return new RegisterAccountService(accountRepository, createAccountDomainService, idGenerator);
+    static create(accountRepository: IAccountRepository, createAccountDomainService: CreateAccountDomainService, idGenerator: IIdGenerator): RegisterAccountAplicationService{
+        return new RegisterAccountAplicationService(accountRepository, createAccountDomainService, idGenerator);
     }
 
     async registerAccount(username: string, email: string, password: string, firstName: string, lastName: string, birthdate: Date): Promise<string> {
@@ -37,4 +38,4 @@ class RegisterAccountService {
 
 }
 
-export default RegisterAccountService;
+export default RegisterAccountAplicationService;

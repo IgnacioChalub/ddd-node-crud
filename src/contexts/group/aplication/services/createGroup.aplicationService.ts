@@ -1,7 +1,8 @@
 import IGroupRepository from "../repositories/group.repository";
-import {Group} from "../../domain/entities/group";
+
 import IIdGenerator from "../infrastructureServices/idGenerator";
 import CreateGroupDomainService from "../../domain/services/createGroup.domainService";
+import Group from "../../domain/entities/group";
 
 class CreateGroupAplicationService{
 
@@ -26,9 +27,7 @@ class CreateGroupAplicationService{
             id = this.idGenerator.generateId();
             group = await this.groupRepository.getGroupById(id);
         } while (group);
-        const newGroup: Group = this.createGroupDomainService.createGroup(id, name, description, ownerId);
-        this.groupRepository.createGroup(newGroup);
-        return newGroup;
+        return this.createGroupDomainService.createNewGroup(id, name, description, ownerId);
     }
 }
 

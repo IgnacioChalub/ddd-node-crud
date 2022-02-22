@@ -1,9 +1,9 @@
 import IGroupRepository from "../repositories/group.repository";
 import IIdGenerator from "../infrastructureServices/idGenerator";
-import {Link} from "../../domain/entities/link";
 import AddLinkDomainService from "../../domain/services/addLink.domainService";
 import domainServices from "../../domain/services";
-import {Group} from "../../domain/entities/group";
+import Link from "../../domain/entities/link";
+import Group from "../../domain/entities/group";
 
 class AddLinkAplicationService{
 
@@ -29,7 +29,6 @@ class AddLinkAplicationService{
         const addLinkDomainService: AddLinkDomainService = domainServices.addLinkDomainService;
         const group: Group = await this.groupRepository.getGroupById(groupId);
         addLinkDomainService.addLink(group, userId, id, title, description, url);
-        this.groupRepository.save(group);
         return group;
     }
 }

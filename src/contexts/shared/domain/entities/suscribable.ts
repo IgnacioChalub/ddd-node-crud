@@ -1,7 +1,5 @@
 import Event from "../domainEvents/event";
 import MessageBus from "../../aplication/messenger/messageBus";
-import messageBus from "../../aplication/messenger/messageBus";
-
 
 abstract class Suscribable{
 

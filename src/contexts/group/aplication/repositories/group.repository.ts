@@ -1,9 +1,7 @@
-import {Group} from "../../domain/entities/group";
-
+import Group from "../../domain/entities/group";
+import Link from "../../domain/entities/link";
 
 export default interface IGroupRepository{
-    createGroup(group: Group): void;
     getGroupById(id: string): Promise<Group>;
-    save(group: Group): void;
-    getLinkById(id: string): Promise<any>;
+    getLinkById(id: string): Promise<Link>;
 }

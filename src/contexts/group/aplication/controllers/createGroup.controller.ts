@@ -1,7 +1,7 @@
 import {Request, Response} from "express";
 import CreateGroupAplicationService from "../services/createGroup.aplicationService";
 import aplicationServices from "../services";
-import {Group} from "../../domain/entities/group";
+import Group from "../../domain/entities/group";
 
 const createGroupController = async (req: Request, res: Response) => {
     const { name, description } = req.body;

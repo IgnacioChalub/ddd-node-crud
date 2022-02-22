@@ -1,5 +1,7 @@
+import Account from "../../domain/entities/account";
+
 export default interface IAccountRepository{
-    getAccountById(id: string): Promise<any>;
-    getAccountByUsername(username: string): Promise<JSON>;
-    getAccountByEmail(email: string): Promise<any>;
+    getAccountById(id: string): Promise<Account>;
+    getAccountByUsername(username: string): Promise<Account>;
+    getAccountByEmail(email: string): Promise<Account>;
 }

@@ -1,4 +1,5 @@
-import {Group} from "../entities/group";
+import Group from "../entities/group";
+
 
 class CreateGroupDomainService {
 
@@ -6,8 +7,9 @@ class CreateGroupDomainService {
         return new CreateGroupDomainService();
     }
 
-    public createGroup(id: string, name: string, description: string, ownerId: string): Group{
-        return Group.create(id, name, description, ownerId);
+    public createNewGroup(id: string, name: string, description: string, ownerId: string): Group{
+        const date: Date = new Date();
+        return Group.new(id, name, description, ownerId, date, date);
     }
 
 }

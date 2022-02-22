@@ -1,4 +1,4 @@
-export class Link{
+class Link{
 
     private id: string;
     private title: string;
@@ -22,3 +22,5 @@ export class Link{
         return new Link(id, title, description, url, date, date);
     }
 }
+
+export default Link;

@@ -1,9 +1,9 @@
-import Event from "../../../shared/domain/domainEvents/event";
-import {Account} from "../entities/account";
+import IEvent from "../../../shared/domain/domainEvents/event";
+import Account from "../entities/account";
 
-class RegisterAccountDomainEvent implements Event{
+class RegisterAccountDomainEvent implements IEvent{
 
-    account: Account;
+    private account: Account;
     raisedAt: Date;
 
     private constructor(account: Account, raisedAt: Date) {
@@ -11,7 +11,7 @@ class RegisterAccountDomainEvent implements Event{
         this.raisedAt = raisedAt;
     }
 
-    static raise(account: Account): RegisterAccountDomainEvent{
+    static raise(account: Account): IEvent{
         return new RegisterAccountDomainEvent(account, new Date());
     }
 
