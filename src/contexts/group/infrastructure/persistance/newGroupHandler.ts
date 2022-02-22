@@ -11,17 +11,17 @@ class NewGroupHandler implements IHandler{
         return new NewGroupHandler();
     }
 
-    async handle(event: IEvent<Group>): Promise<void> {
-        const group: Group = event.getData();
-        return await db('group')
-            .insert({
-                id: group.getId(),
-                name: group.getName(),
-                description: group.getDescription(),
-                ownerId: group.getOwnerId(),
-                createdAt: group.getCreatedAt(),
-                updatedAt: group.getUpdatedAt()
-            });
+    async handle(event: IEvent): Promise<void> {
+        // const group: Group = event.getData();
+        // return await db('group')
+        //     .insert({
+        //         id: group.getId(),
+        //         name: group.getName(),
+        //         description: group.getDescription(),
+        //         ownerId: group.getOwnerId(),
+        //         createdAt: group.getCreatedAt(),
+        //         updatedAt: group.getUpdatedAt()
+        //     });
     }
 }
 

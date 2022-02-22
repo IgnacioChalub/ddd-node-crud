@@ -1,7 +1,7 @@
 import IEvent from "../../../shared/domain/domainEvents/event";
 import Group from "../entities/group";
 
-class NewGroupDomainEvent implements IEvent<Group>{
+class NewGroupDomainEvent implements IEvent{
     raisedAt: Date;
     private group: Group;
 
