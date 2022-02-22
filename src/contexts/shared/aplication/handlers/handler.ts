@@ -1,5 +1,7 @@
+import Event from "../../domain/domainEvents/event";
+
 interface IHandler{
-    handle(event: any): void;
+    handle(event: Event): void;
 }
 
 export default IHandler;

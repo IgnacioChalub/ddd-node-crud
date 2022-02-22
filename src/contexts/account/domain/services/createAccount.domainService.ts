@@ -24,7 +24,7 @@ class CreateAccountDomainService {
         const encryptedPassword = this.encrypter.encrypt(password);
         const date = new Date();
 
-        return Account.create(id, username, email, encryptedPassword, firstName, lastName, birthdate, true, date, date);
+        return Account.register(id, username, email, encryptedPassword, firstName, lastName, birthdate, true, date, date);
     }
 
 }

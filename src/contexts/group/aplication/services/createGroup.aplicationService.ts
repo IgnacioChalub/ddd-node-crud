@@ -1,8 +1,7 @@
 import IGroupRepository from "../repositories/group.repository";
-
 import {Group} from "../../domain/entities/group";
-import {CreateGroupDomainService} from "../../domain/services/createGroup.domainService";
 import IIdGenerator from "../infrastructureServices/idGenerator";
+import CreateGroupDomainService from "../../domain/services/createGroup.domainService";
 
 class CreateGroupAplicationService{
 

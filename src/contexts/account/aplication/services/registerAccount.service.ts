@@ -32,8 +32,6 @@ class RegisterAccountService {
 
         const newAccount: Account = this.createAccountDomainService.createAccount(id, username, email, password, firstName, lastName, birthdate);
 
-        await this.accountRepository.registerAccount(newAccount)
-
         return newAccount.getId();
     }
 

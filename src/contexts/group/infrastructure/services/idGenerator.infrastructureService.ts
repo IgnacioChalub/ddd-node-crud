@@ -3,7 +3,7 @@ import {randomUUID} from "crypto";
 
 class IdGeneratorInfrastructureService implements IIdGenerator{
 
-    constructor() {}
+    private constructor() {}
 
     static create(): IIdGenerator{
         return new IdGeneratorInfrastructureService();

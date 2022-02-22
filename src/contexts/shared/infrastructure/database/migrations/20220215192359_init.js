@@ -12,6 +12,7 @@ exports.up = function(knex) {
             table.string('title').notNullable();
             table.string('description').notNullable();
             table.string('url').notNullable();
+            table.string('groupId').notNullable();
             table.timestamp('createdAt');
             table.timestamp('updatedAt');
         }).createTable('group-account', (table) => {
@@ -25,6 +26,8 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-    return knex.schema.dropTable('group');
+    knex.schema.dropTable('group');
+    knex.schema.dropTable('link');
+    knex.schema.dropTable('group-account');
 };
 

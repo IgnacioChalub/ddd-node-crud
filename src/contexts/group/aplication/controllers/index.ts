@@ -1,7 +1,9 @@
 import createGroupController from "./createGroup.controller";
+import addLinkController from "./addLink.controller";
 
 const controllers = {
-    createGroupController
+    createGroupController,
+    addLinkController
 };
 
 export default controllers;

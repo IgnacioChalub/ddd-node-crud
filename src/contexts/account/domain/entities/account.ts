@@ -1,18 +1,22 @@
+import Suscribable from "../../../shared/domain/entities/suscribable";
+import RegisterAccountDomainEvent from "../domainEvents/registerAccountDomainEvent";
+import RegisterAccountMessageBus from "../../../shared/aplication/messenger/registerAccountMessageBus";
 
-export class Account {
+export class Account extends Suscribable{
 
-    private readonly id: string;
-    private readonly username: string;
-    private readonly email: string;
-    private readonly password: string;
-    private readonly firstName: string;
-    private readonly lastName: string;
-    private readonly birthdate: Date;
-    private readonly active: boolean;
-    private readonly createdAt: Date;
-    private readonly updatedAt: Date;
+    private id: string;
+    private username: string;
+    private email: string;
+    private password: string;
+    private firstName: string;
+    private lastName: string;
+    private birthdate: Date;
+    private active: boolean;
+    private createdAt: Date;
+    private updatedAt: Date;
 
     private constructor(id: string, username: string, email: string, password: string, firstName: string, lastName: string, birthdate: Date, active: boolean, createdAt: Date, updatedAt: Date) {
+        super();
         this.id = id;
         this.username = username;
         this.email = email;
@@ -25,8 +29,17 @@ export class Account {
         this.updatedAt = updatedAt;
     }
 
+    public static register(id: string, username: string, email: string, password: string, firstName: string, lastName: string, birthdate: Date, active: boolean, createdAt: Date, updatedAt: Date): Account {
+        const account: Account = Account.create(id, username, email, password, firstName, lastName, birthdate, active, createdAt, updatedAt);
+        account.notify(RegisterAccountDomainEvent.raise(account));
+        return account;
+    }
+
+
     public static create(id: string, username: string, email: string, password: string, firstName: string, lastName: string, birthdate: Date, active: boolean, createdAt: Date, updatedAt: Date): Account {
-        return new Account(id, username, email, password, firstName, lastName, birthdate, active, createdAt, updatedAt);
+        const account = new Account(id, username, email, password, firstName, lastName, birthdate, active, createdAt, updatedAt);
+        account.addMessageBus(RegisterAccountMessageBus.create());
+        return account;
     }
 
     public static createFromJson(json: any): Account{

@@ -37,20 +37,4 @@ export class AccountDAO implements IAccountRepository{
             });
     }
 
-    async registerAccount(account: Account): Promise<void> {
-        return await db('account')
-            .insert({
-                id: account.getId(),
-                username: account.getUsername(),
-                email: account.getEmail(),
-                password: account.getPassword(),
-                firstName: account.getFirstName(),
-                lastName: account.getLastName(),
-                birthday: account.getBirthday(),
-                active: account.isActive(),
-                createdAt: account.getCreatedAt(),
-                updatedAt: account.getUpdatedAt()
-            }).returning('*');
-    }
-
 }

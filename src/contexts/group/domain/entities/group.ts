@@ -48,5 +48,13 @@ export class Group{
         return this.updatedAt;
     }
 
+    public isOwner(id: string): boolean{
+        return this.ownerId === id;
+    }
+
+    public addLink(link: Link): void{
+        this.updatedAt = new Date();
+        this.links.push(link);
+    }
 
 }

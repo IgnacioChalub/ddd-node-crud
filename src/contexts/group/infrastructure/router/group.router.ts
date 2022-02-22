@@ -7,5 +7,6 @@ import {UserTokenValidation} from "../../../shared/infrastructure/auth/verifyTok
 const router = express.Router();
 
 router.post('/group/create', UserTokenValidation, validate(groupSchemas.createGroupSchema), controllers.createGroupController);
+router.post('/group/add-link/:groupId', UserTokenValidation, validate(groupSchemas.addLinkSchema), controllers.addLinkController)
 
 export { router as groupRouter };

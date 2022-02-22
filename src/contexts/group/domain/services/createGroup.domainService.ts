@@ -1,6 +1,6 @@
 import {Group} from "../entities/group";
 
-export class CreateGroupDomainService {
+class CreateGroupDomainService {
 
     static create(): CreateGroupDomainService{
         return new CreateGroupDomainService();
@@ -11,3 +11,5 @@ export class CreateGroupDomainService {
     }
 
 }
+
+export default CreateGroupDomainService;

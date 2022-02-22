@@ -27,4 +27,20 @@ export class GroupDAO implements IGroupRepository{
                 return response;
             });
     }
+
+    getLinkById(id: string): Promise<any> {
+        return Promise.resolve(undefined);
+    }
+
+    async save(group: Group): Promise<void> {
+        await db
+            .where("id", "=", group.getId)
+            .update({
+                name: group.getName(),
+                description: group.getDescription(),
+                updatedAt: group.getUpdatedAt()
+            })
+
+
+    }
 }
