@@ -1,7 +1,9 @@
 import IEvent from "../domainEvents/event";
+import IHandler from "../../aplication/handlers/handler";
 
 interface IPublisher{
-    publish(event: IEvent): void
+    eventHandlers: IHandler[];
+    publish(event: IEvent): void;
 }
 
 export default IPublisher;

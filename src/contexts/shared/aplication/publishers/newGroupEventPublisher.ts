@@ -1,11 +1,11 @@
 import IPublisher from "../../domain/publisher/publisher";
-import IEvent from "../../domain/domainEvents/event";
 import IHandler from "../handlers/handler";
-import RegisterAccountHandler from "../../../account/infrastructure/persistance/registerAccountHandler";
+import IEvent from "../../domain/domainEvents/event";
+import NewGroupHandler from "../../../group/infrastructure/persistance/newGroupHandler";
 
-class RegisterAccountEventPublisher implements IPublisher {
+class NewGroupEventPublisher implements IPublisher{
+
     eventHandlers: IHandler[];
-
 
     private constructor(eventHandlers: IHandler[]) {
         this.eventHandlers = eventHandlers;
@@ -13,8 +13,8 @@ class RegisterAccountEventPublisher implements IPublisher {
 
     static create(): IPublisher{
         const eventHandlers: IHandler[] = [];
-        eventHandlers.push(RegisterAccountHandler.create());
-        return new RegisterAccountEventPublisher(eventHandlers);
+        eventHandlers.push(NewGroupHandler.create());
+        return new NewGroupEventPublisher(eventHandlers);
     }
 
     publish(event: IEvent): void {
@@ -23,8 +23,6 @@ class RegisterAccountEventPublisher implements IPublisher {
         }
     }
 
-
-
 }
 
-export default RegisterAccountEventPublisher;
+export default NewGroupEventPublisher;

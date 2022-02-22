@@ -1,5 +1,4 @@
 import RegisterAccountDomainEvent from "../domainEvents/registerAccountDomainEvent";
-import IEvent from "../../../shared/domain/domainEvents/event";
 
 class Account {
 
@@ -28,8 +27,7 @@ class Account {
     }
 
     public static create(id: string, username: string, email: string, password: string, firstName: string, lastName: string, birthdate: Date, active: boolean, createdAt: Date, updatedAt: Date): Account {
-        const account = new Account(id, username, email, password, firstName, lastName, birthdate, active, createdAt, updatedAt);
-        return account;
+        return new Account(id, username, email, password, firstName, lastName, birthdate, active, createdAt, updatedAt);
     }
 
     public static register(id: string, username: string, email: string, password: string, firstName: string, lastName: string, birthdate: Date, active: boolean, createdAt: Date, updatedAt: Date): RegisterAccountDomainEvent {

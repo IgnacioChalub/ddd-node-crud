@@ -1,8 +1,8 @@
 import IHandler from "../../../shared/aplication/handlers/handler";
 // @ts-ignore
 import db from "../../../shared/infrastructure/database/database";
+import NewGroupDomainEvent from "../../domain/events/newGroupDomainEvent";
 import Group from "../../domain/entities/group";
-import IEvent from "../../../shared/domain/domainEvents/event";
 
 class NewGroupHandler implements IHandler{
     constructor() {}
@@ -11,17 +11,17 @@ class NewGroupHandler implements IHandler{
         return new NewGroupHandler();
     }
 
-    async handle(event: IEvent): Promise<void> {
-        // const group: Group = event.getData();
-        // return await db('group')
-        //     .insert({
-        //         id: group.getId(),
-        //         name: group.getName(),
-        //         description: group.getDescription(),
-        //         ownerId: group.getOwnerId(),
-        //         createdAt: group.getCreatedAt(),
-        //         updatedAt: group.getUpdatedAt()
-        //     });
+    async handle(event: NewGroupDomainEvent): Promise<void> {
+        const group: Group = event.getGroup();
+        return await db('group')
+            .insert({
+                id: group.getId(),
+                name: group.getName(),
+                description: group.getDescription(),
+                ownerId: group.getOwnerId(),
+                createdAt: group.getCreatedAt(),
+                updatedAt: group.getUpdatedAt()
+            });
     }
 }
 

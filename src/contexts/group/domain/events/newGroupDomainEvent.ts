@@ -15,7 +15,7 @@ class NewGroupDomainEvent implements IEvent{
         return new NewGroupDomainEvent(new Date(), group);
     }
 
-    public getData(): Group{
+    public getGroup(): Group{
         return this.group;
     }
 }
