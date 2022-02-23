@@ -2,9 +2,9 @@ import IEvent from "../../../shared/domain/domainEvents/event";
 import Group from "../entities/group";
 
 class NewGroupDomainEvent implements IEvent{
+
     raisedAt: Date;
     private group: Group;
-
 
     private constructor(raisedAt: Date, group: Group) {
         this.raisedAt = raisedAt;

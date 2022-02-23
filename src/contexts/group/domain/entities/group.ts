@@ -1,5 +1,7 @@
 import Link from "./link";
 import NewGroupDomainEvent from "../events/newGroupDomainEvent";
+import AddLinkDomainService from "../services/addLink.domainService";
+import AddLinkDomainEvent from "../events/addLinkDomainEvent";
 
 
 class Group {
@@ -58,9 +60,12 @@ class Group {
         return this.ownerId === id;
     }
 
-    public addLink(link: Link): void{
-        this.updatedAt = new Date();
-        this.links.push(link);
+    public addLink(linkId: string, title: string, description: string, url: string): AddLinkDomainEvent{
+        const date: Date = new Date();
+        this.updatedAt = date;
+        const newLink: Link = Link.create(linkId, title, description, url, date, date);
+        this.links.push(newLink);
+        return AddLinkDomainEvent.raise(newLink, this.getId());
     }
 
 }

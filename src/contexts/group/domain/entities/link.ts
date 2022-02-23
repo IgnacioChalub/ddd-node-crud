@@ -17,10 +17,34 @@ class Link{
         this.createdAt = createdAt;
     }
 
-    static create(id: string, title: string, description: string, url: string): Link{
-        const date: Date = new Date();
-        return new Link(id, title, description, url, date, date);
+    static create(id: string, title: string, description: string, url: string, updatedAt: Date, createdAt: Date): Link{
+        return new Link(id, title, description, url, updatedAt, createdAt);
     }
+
+    public getId(): string{
+        return this.id;
+    }
+
+    public getTitle(): string{
+        return this.title;
+    }
+
+    public getDescription(): string{
+        return this.description;
+    }
+
+    public getUrl(): string{
+        return this.url;
+    }
+
+    public getUpdatedAt(): Date{
+        return this.updatedAt;
+    }
+
+    public getCreatedAt(): Date{
+        return this.createdAt;
+    }
+
 }
 
 export default Link;

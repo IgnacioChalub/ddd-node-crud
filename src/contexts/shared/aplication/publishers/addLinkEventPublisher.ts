@@ -1,10 +1,9 @@
 import IPublisher from "../../domain/publisher/publisher";
 import IHandler from "../handlers/handler";
-import NewGroupHandler from "../../../group/infrastructure/persistance/newGroupHandler";
 import Publisher from "./publisher";
+import SaveLinkHandler from "../../../group/infrastructure/persistance/saveLinkHandler";
 
-class NewGroupEventPublisher extends Publisher{
-
+class AddLinkEventPublisher extends Publisher{
 
     constructor(eventHandlers: IHandler[]) {
         super(eventHandlers);
@@ -12,10 +11,9 @@ class NewGroupEventPublisher extends Publisher{
 
     static create(): IPublisher{
         const eventHandlers: IHandler[] = [];
-        eventHandlers.push(NewGroupHandler.create());
-        return new NewGroupEventPublisher(eventHandlers);
+        eventHandlers.push(SaveLinkHandler.create());
+        return new AddLinkEventPublisher(eventHandlers);
     }
-
 }
 
-export default NewGroupEventPublisher;
+export default AddLinkEventPublisher;
