@@ -1,39 +1,42 @@
 import Link from "./link";
 import NewGroupDomainEvent from "../events/newGroupDomainEvent";
-import AddLinkDomainService from "../services/addLink.domainService";
 import AddLinkDomainEvent from "../events/addLinkDomainEvent";
-
+import Participant from "./participant";
 
 class Group {
 
     private id: string;
     private name: string;
     private description: string;
-    private ownerId: string;
-    private editorsId: string[];
-    private viewersId: string[];
+    private owner: Participant;
+    private editors: Participant[];
+    private viewers: Participant[];
     private links: Link[];
     private updatedAt: Date;
     private createdAt: Date;
 
-    private constructor(id: string, name: string, description: string, ownerId: string, updatedAt: Date, createdAt: Date) {
+
+    private constructor(id: string, name: string, description: string, owner: Participant, editors: Participant[], viewers: Participant[], links: Link[], updatedAt: Date, createdAt: Date) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.ownerId = ownerId;
-        this.editorsId = [];
-        this.viewersId = [];
-        this.links = [];
+        this.owner = owner;
+        this.editors = editors;
+        this.viewers = viewers;
+        this.links = links;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
     }
 
-    static create(id: string, name: string, description: string, ownerId: string, updatedAt: Date, createdAt: Date): Group{
-        return new Group(id, name, description, ownerId, updatedAt, createdAt);
+    static create(id: string, name: string, description: string, owner: Participant, editors: Participant[], viewers: Participant[], links: Link[], updatedAt: Date, createdAt: Date): Group{
+        return new Group(id, name, description, owner, editors, viewers, links, updatedAt, createdAt);
     }
 
-    static new(id: string, name: string, description: string, ownerId: string, updatedAt: Date, createdAt: Date): NewGroupDomainEvent{
-        const group: Group = Group.create(id, name, description, ownerId, updatedAt, createdAt);
+    static new(id: string, name: string, description: string, owner: Participant, updatedAt: Date, createdAt: Date): NewGroupDomainEvent{
+        const editors: Participant[] = [];
+        const viewers: Participant[] = [];
+        const links: Link[] = [];
+        const group: Group = Group.create(id, name, description, owner, editors, viewers, links, updatedAt, createdAt);
         return NewGroupDomainEvent.raise(group);
     }
 
@@ -47,7 +50,7 @@ class Group {
         return this.description;
     }
     public getOwnerId(): string{
-        return this.ownerId;
+        return this.owner.getId();
     }
     public getCreatedAt(): Date{
         return this.createdAt;
@@ -57,7 +60,7 @@ class Group {
     }
 
     public isOwner(id: string): boolean{
-        return this.ownerId === id;
+        return this.owner.getId() === id;
     }
 
     public addLink(linkId: string, title: string, description: string, url: string): AddLinkDomainEvent{

@@ -1,6 +1,7 @@
 import Group from "../entities/group";
 import IPublisher from "../../../shared/domain/publisher/publisher";
 import NewGroupDomainEvent from "../events/newGroupDomainEvent";
+import Participant from "../entities/participant";
 
 
 class CreateGroupDomainService {
@@ -15,9 +16,9 @@ class CreateGroupDomainService {
         return new CreateGroupDomainService(publisher);
     }
 
-    public createNewGroup(id: string, name: string, description: string, ownerId: string): Group{
+    public createNewGroup(id: string, name: string, description: string, owner: Participant): Group{
         const date: Date = new Date();
-        const event: NewGroupDomainEvent = Group.new(id, name, description, ownerId, date, date);
+        const event: NewGroupDomainEvent = Group.new(id, name, description, owner, date, date);
         this.publisher.publish(event);
         return event.getGroup();
     }

@@ -3,7 +3,7 @@ import Account from "../entities/account";
 
 class RegisterAccountDomainEvent implements IEvent{
 
-    private account: Account;
+    account: Account;
     raisedAt: Date;
 
     private constructor(account: Account, raisedAt: Date) {
@@ -13,10 +13,6 @@ class RegisterAccountDomainEvent implements IEvent{
 
     static raise(account: Account): IEvent{
         return new RegisterAccountDomainEvent(account, new Date());
-    }
-
-    public getAccount(): Account{
-        return this.account;
     }
 
 }

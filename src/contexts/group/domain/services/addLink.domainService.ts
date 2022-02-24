@@ -1,9 +1,7 @@
 import IUrlValidator from "../../aplication/infrastructureServices/urlValidator";
 import Group from "../entities/group";
-import Link from "../entities/link";
 import AddLinkDomainEvent from "../events/addLinkDomainEvent";
 import IPublisher from "../../../shared/domain/publisher/publisher";
-import publisher from "../../../shared/domain/publisher/publisher";
 
 class AddLinkDomainService{
 

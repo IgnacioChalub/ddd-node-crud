@@ -1,4 +1,3 @@
-
 import IAccountRepository from "../../aplication/repositories/account.repository";
 // @ts-ignore
 import db from "../../../shared/infrastructure/database/database";

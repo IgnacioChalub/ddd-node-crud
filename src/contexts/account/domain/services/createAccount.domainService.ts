@@ -2,7 +2,6 @@ import IEmailValidator from "../infrastructureServices/emailValidator";
 import IEncrypter from "../infrastructureServices/encrypter";
 import Account from "../entities/account";
 import IPublisher from "../../../shared/domain/publisher/publisher";
-import IEvent from "../../../shared/domain/domainEvents/event";
 import RegisterAccountDomainEvent from "../domainEvents/registerAccountDomainEvent";
 
 class CreateAccountDomainService {
@@ -33,7 +32,7 @@ class CreateAccountDomainService {
         const event: RegisterAccountDomainEvent = Account.register(id, username, email, encryptedPassword, firstName, lastName, birthdate, true, date, date);
         this.publisher.publish(event);
 
-        return event.getAccount();
+        return event.account;
     }
 
 }

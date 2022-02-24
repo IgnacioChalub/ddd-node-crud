@@ -5,7 +5,6 @@ import Publisher from "./publisher";
 
 class NewGroupEventPublisher extends Publisher{
 
-
     constructor(eventHandlers: IHandler[]) {
         super(eventHandlers);
     }

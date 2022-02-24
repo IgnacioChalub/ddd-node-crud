@@ -4,7 +4,6 @@ exports.up = function(knex) {
             table.string('id').notNullable().primary();
             table.string('name').notNullable();
             table.string('description').notNullable();
-            table.string('ownerId').notNullable();
             table.timestamp('createdAt');
             table.timestamp('updatedAt');
         }).createTable('link', (table) => {
@@ -15,10 +14,14 @@ exports.up = function(knex) {
             table.string('groupId').notNullable();
             table.timestamp('createdAt');
             table.timestamp('updatedAt');
-        }).createTable('group-account', (table) => {
+        }).createTable('participant', (table) => {
+            table.string('id').notNullable().primary();
+            table.string('username').notNullable();
+        }).createTable('group-participant', (table) => {
             table.increments('id');
-            table.string('accountId').notNullable();
+            table.string('participantId').notNullable();
             table.string('groupId').notNullable();
+            table.boolean('owner').notNullable();
             table.boolean('editor').notNullable();
             table.timestamp('createdAt');
             table.timestamp('updatedAt');
@@ -28,6 +31,7 @@ exports.up = function(knex) {
 exports.down = function(knex) {
     knex.schema.dropTable('group');
     knex.schema.dropTable('link');
-    knex.schema.dropTable('group-account');
+    knex.schema.dropTable('participant')
+    knex.schema.dropTable('group-participant');
 };
 

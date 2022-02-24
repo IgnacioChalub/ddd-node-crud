@@ -1,9 +1,11 @@
-import {Request, Response} from "express";
+import {Response} from "express";
 import AddLinkAplicationService from "../services/addLink.aplicationService";
 import aplicationServices from "../services";
 import Group from "../../domain/entities/group";
+import Express from "../../../shared/types/express/types";
+import AccountRequest = Express.AccountRequest;
 
-const addLinkController = async (req: Request, res: Response) => {
+const addLinkController = async (req: AccountRequest, res: Response) => {
     const { title, description, url } = req.body;
     const userId = req.userId;
     const groupId = req.params.groupId;

@@ -14,7 +14,7 @@ class RegisterAccountHandler implements IHandler{
     }
 
     async handle(event: RegisterAccountDomainEvent): Promise<void> {
-        const account: Account = event.getAccount();
+        const account: Account = event.account;
         return await db('account')
             .insert({
                 id: account.getId(),

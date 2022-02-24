@@ -13,12 +13,20 @@ class NewGroupHandler implements IHandler{
 
     async handle(event: NewGroupDomainEvent): Promise<void> {
         const group: Group = event.getGroup();
-        return await db('group')
+        await db('group')
             .insert({
                 id: group.getId(),
                 name: group.getName(),
                 description: group.getDescription(),
-                ownerId: group.getOwnerId(),
+                createdAt: group.getCreatedAt(),
+                updatedAt: group.getUpdatedAt()
+            });
+        await db('group-participant')
+            .insert({
+                participantId: group.getOwnerId(),
+                groupId: group.getId(),
+                owner: true,
+                editor: true,
                 createdAt: group.getCreatedAt(),
                 updatedAt: group.getUpdatedAt()
             });
