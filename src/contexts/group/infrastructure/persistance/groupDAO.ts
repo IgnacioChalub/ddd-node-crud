@@ -74,7 +74,6 @@ export class GroupDAO implements IGroupRepository{
         const viewers: Participant[] = await this.createParticipants(viewerResponse);
         const links: Link[] = this.createLinks(linkResponse);
         const group: Group = Group.create(id, groupResponse.name, groupResponse.description, owner, editors, viewers, links, groupResponse.updatedAt, groupResponse.createdAt);
-        console.log(group)
         return group
     }
 
