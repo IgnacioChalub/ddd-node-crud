@@ -18,8 +18,8 @@ class AddLinkDomainService{
         return new AddLinkDomainService(urlValidator, publisher);
     }
 
-    public addLink(group: Group, userId: string, linkId: string, title: string, description: string, url: string): void{
-        if(!group.isOwner(userId)) throw Error('User is not group owner');
+    public addLink(group: Group, participantId: string, linkId: string, title: string, description: string, url: string): void{
+        if(!group.isEditor(participantId) && !group.isOwner(participantId)) throw Error('User is not an editor')
         if(!this.urlValidator.isValid(url)) throw Error("Invalid URL");
         const addLinkDomainEvent: AddLinkDomainEvent = group.addLink(linkId, title, description, url);
         this.publisher.publish(addLinkDomainEvent);

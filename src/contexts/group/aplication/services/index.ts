@@ -9,7 +9,6 @@ import domainServices from "../../domain/services";
 import CreateParticipantAplicationService from "./createParticipant.aplicationService";
 import IParticipantRepository from "../repositories/participant.repository";
 import ParticipantDAO from "../../infrastructure/persistance/participantDAO";
-import participantDAO from "../../infrastructure/persistance/participantDAO";
 
 const groupRepository: IGroupRepository = new GroupDAO();
 const participantRepository: IParticipantRepository = new ParticipantDAO();
@@ -18,7 +17,7 @@ const idGeneratorInfrastructureService: IIdGenerator = IdGeneratorInfrastructure
 
 
 const createGroupAplicationService: CreateGroupAplicationService = CreateGroupAplicationService.create(groupRepository, createGroupDomainService, participantRepository,idGeneratorInfrastructureService);
-const addLinkAplicationService: AddLinkAplicationService = AddLinkAplicationService.create(groupRepository, idGeneratorInfrastructureService);
+const addLinkAplicationService: AddLinkAplicationService = AddLinkAplicationService.create(groupRepository, idGeneratorInfrastructureService, domainServices.addLinkDomainService);
 const createParticipantAplicationService: CreateParticipantAplicationService = CreateParticipantAplicationService.create(domainServices.createParticipantDomainService);
 
 const aplicationServices = {

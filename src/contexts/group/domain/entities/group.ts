@@ -63,6 +63,13 @@ class Group {
         return this.owner.getId() === id;
     }
 
+    public isEditor(id: string): boolean{
+        for (const editor of this.editors) {
+            if(editor.getId() === id) return true;
+        }
+        return false;
+    }
+
     public addLink(linkId: string, title: string, description: string, url: string): AddLinkDomainEvent{
         const date: Date = new Date();
         this.updatedAt = date;
@@ -70,6 +77,15 @@ class Group {
         this.links.push(newLink);
         return AddLinkDomainEvent.raise(newLink, this.getId());
     }
+
+    public getLink(linkId: string): Link | null{
+        for (const link of this.links) {
+            if(link.getId() == linkId) return link;
+        }
+        return null;
+    }
+
+
 
 }
 

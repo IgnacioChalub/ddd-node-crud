@@ -9,7 +9,7 @@ export class GroupDAO implements IGroupRepository{
 
     /**
      * TODO: optimize,
-     * Hacer una query sola parta owner, editors y viewers y despues filtrar cuando creo los objetos.
+     * Hacer una query sola para owner, editors y viewers y despues filtrar cuando creo los objetos.
      */
 
     async getGroupById(id: string): Promise<Group> {
@@ -20,9 +20,9 @@ export class GroupDAO implements IGroupRepository{
             .first()
             .where("id", "=", id)
             .then((response: any) => {
-                if(!response) return response;
                 groupResponse = response;
             });
+        if(!groupResponse) return groupResponse;
         let ownerResponse: any;
         await db
             .select("*")
@@ -41,7 +41,8 @@ export class GroupDAO implements IGroupRepository{
             .from("group-participant")
             .where({
                 groupId: id,
-                editor: true
+                editor: true,
+                owner: false
             })
             .then((response: any) => {
                 editorResponse = response;
@@ -68,21 +69,38 @@ export class GroupDAO implements IGroupRepository{
             .then((response: any) => {
                 linkResponse = response;
             });
-        const owner: Participant = Participant.create(ownerResponse.id, ownerResponse.username);
-        const editors: Participant[] = this.createParticipants(editorResponse);
-        const viewers: Participant[] = this.createParticipants(viewerResponse);
+        const owner: Participant = await this.createOwner(ownerResponse);
+        const editors: Participant[] = await this.createParticipants(editorResponse);
+        const viewers: Participant[] = await this.createParticipants(viewerResponse);
         const links: Link[] = this.createLinks(linkResponse);
-        return Group.create(id, groupResponse.name, groupResponse.description, owner, editors, viewers, links, groupResponse.updatedAt, groupResponse.createdAt);
+        const group: Group = Group.create(id, groupResponse.name, groupResponse.description, owner, editors, viewers, links, groupResponse.updatedAt, groupResponse.createdAt);
+        console.log(group)
+        return group
     }
 
-    getLinkById(id: string): Promise<any> {
-        return Promise.resolve(undefined);
+    private async createOwner(ownerResponse: any): Promise<Participant> {
+        return await db
+            .select("*")
+            .from("participant")
+            .first()
+            .where("id", "=", ownerResponse.participantId)
+            .then((response: any) => {
+                return Participant.create(response.id, response.username);
+            });
+
     }
 
-    private createParticipants(editorResponse: any): Participant[] {
+    private async createParticipants(participantResponses: any): Promise<Participant[]> {
         const participants: Participant[] = [];
-        for (const participantResponse of editorResponse) {
-            participants.push(Participant.create(participantResponse.id, participantResponse.userName));
+        for (const participantResponse of participantResponses) {
+            await db
+                .select("*")
+                .from("participant")
+                .first()
+                .where("id", "=", participantResponse.participantId)
+                .then((response: any) => {
+                    participants.push(Participant.create(response.id, response.userName));
+                });
         }
         return participants;
     }
