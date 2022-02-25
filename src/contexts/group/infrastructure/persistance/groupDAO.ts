@@ -92,8 +92,7 @@ export class GroupDAO implements IGroupRepository{
         const editors: Participant[] = await this.createParticipants(editorResponse);
         const viewers: Participant[] = await this.createParticipants(viewerResponse);
         const links: Link[] = this.createLinks(linkResponse);
-        const group: Group = Group.create(id, groupResponse.name, groupResponse.description, owner, editors, viewers, links, groupResponse.updatedAt, groupResponse.createdAt);
-        return group
+        return Group.create(id, groupResponse.name, groupResponse.description, owner, editors, viewers, links, groupResponse.updatedAt, groupResponse.createdAt)
     }
 
     private async createOwner(ownerResponse: any): Promise<Participant> {
@@ -117,7 +116,7 @@ export class GroupDAO implements IGroupRepository{
                 .first()
                 .where("id", "=", participantResponse.participantId)
                 .then((response: any) => {
-                    participants.push(Participant.create(response.id, response.userName));
+                    participants.push(Participant.create(response.id, response.username));
                 });
         }
         return participants;
