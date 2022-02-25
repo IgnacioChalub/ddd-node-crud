@@ -7,6 +7,25 @@ import Link from "../../domain/entities/link";
 
 export class GroupDAO implements IGroupRepository{
 
+    async getAllParticipantsGroups(participantId: string): Promise<Group[]> {
+        let relatedGroupsResponse: any[] = [];
+        await db
+            .select("*")
+            .from("group-participant")
+            .where({
+                participantId: participantId
+            })
+            .then((response: any) => {
+                relatedGroupsResponse = response;
+            });
+        let groups: Group[] = [];
+        for (const response of relatedGroupsResponse) {
+            const group: Group = await this.getGroupById(response.groupId);
+            groups.push(group);
+        }
+        return groups;
+    }
+
     /**
      * TODO: optimize,
      * Hacer una query sola para owner, editors y viewers y despues filtrar cuando creo los objetos.

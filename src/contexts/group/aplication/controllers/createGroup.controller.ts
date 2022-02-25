@@ -1,4 +1,4 @@
-import {Request, Response} from "express";
+import {Response} from "express";
 import CreateGroupAplicationService from "../services/createGroup.aplicationService";
 import aplicationServices from "../services";
 import Group from "../../domain/entities/group";
