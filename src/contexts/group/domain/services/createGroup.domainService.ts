@@ -8,7 +8,7 @@ class CreateGroupDomainService {
 
     private publisher: IPublisher;
 
-    constructor(publisher: IPublisher) {
+    private constructor(publisher: IPublisher) {
         this.publisher = publisher;
     }
 

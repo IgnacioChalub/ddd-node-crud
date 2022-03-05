@@ -12,9 +12,7 @@ export class GroupDAO implements IGroupRepository{
         await db
             .select("*")
             .from("group-participant")
-            .where({
-                participantId: participantId
-            })
+            .where("participantId", "=", participantId)
             .then((response: any) => {
                 relatedGroupsResponse = response;
             });
@@ -116,6 +114,7 @@ export class GroupDAO implements IGroupRepository{
                 .first()
                 .where("id", "=", participantResponse.participantId)
                 .then((response: any) => {
+                    if(!response) return participants;
                     participants.push(Participant.create(response.id, response.username));
                 });
         }

@@ -26,6 +26,11 @@ class Participant{
     public getUsername(): string{
         return this.username;
     }
+
+    compareTo(participant: Participant): boolean{
+        if(this.getId() === participant.getId() && this.getUsername() && participant.getUsername()) return true;
+        return false;
+    }
 }
 
 export default Participant;

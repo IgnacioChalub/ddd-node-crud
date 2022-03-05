@@ -2,6 +2,8 @@ import Link from "./link";
 import NewGroupDomainEvent from "../events/newGroupDomainEvent";
 import AddLinkDomainEvent from "../events/addLinkDomainEvent";
 import Participant from "./participant";
+import RemoveParticipantFromGroup from "../events/changeParticipantPermissionEvent";
+import ChangeParticipantPermissionEvent from "../events/changeParticipantPermissionEvent";
 
 class Group {
 
@@ -70,6 +72,13 @@ class Group {
         return false;
     }
 
+    public isViewer(id: string): boolean{
+        for (const viewer of this.viewers) {
+            if(viewer.getId() === id) return true;
+        }
+        return false;
+    }
+
     public addLink(linkId: string, title: string, description: string, url: string): AddLinkDomainEvent{
         const date: Date = new Date();
         this.updatedAt = date;
@@ -85,7 +94,53 @@ class Group {
         return null;
     }
 
+    public remove(aParticipant: Participant): ChangeParticipantPermissionEvent{
+        if(this.removeFromViewers(aParticipant)) {
+            return ChangeParticipantPermissionEvent.raise(aParticipant, this);
+        }
+        if(this.removeFromEditors(aParticipant)) {
+            return ChangeParticipantPermissionEvent.raise(aParticipant, this);
+        }
+        throw Error('Participant not found in group');
+    }
 
+    private removeFromViewers(aParticipant: Participant): boolean{
+        let index: number = this.viewers.findIndex(participant => participant.compareTo(aParticipant));
+        if(index != -1) {
+            this.viewers.splice(index, 1)
+            return true;
+        }
+        return false;
+    }
+
+    private removeFromEditors(aParticipant: Participant): boolean{
+        let index: number = this.editors.findIndex(participant => participant.compareTo(aParticipant));
+        if(index != -1) {
+            this.editors.splice(index, 1)
+            return true;
+        }
+        return false;
+    }
+
+    public makeEditor(aParticipant: Participant): ChangeParticipantPermissionEvent{
+        this.removeFromViewers(aParticipant);
+        let index: number = this.editors.findIndex(participant => participant.compareTo(aParticipant));
+        if(index != -1) {
+           throw Error('Participant already editor');
+        }
+        this.editors.push(aParticipant);
+        return ChangeParticipantPermissionEvent.raise(aParticipant, this);
+    }
+
+    public makeViewer(aParticipant: Participant): ChangeParticipantPermissionEvent{
+        this.removeFromEditors(aParticipant);
+        let index: number = this.viewers.findIndex(participant => participant.compareTo(aParticipant));
+        if(index != -1) {
+           throw Error('Participant already viewe');
+        }
+        this.viewers.push(aParticipant);
+        return ChangeParticipantPermissionEvent.raise(aParticipant, this);
+    }
 
 }
 

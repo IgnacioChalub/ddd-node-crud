@@ -10,6 +10,9 @@ import CreateParticipantAplicationService from "./createParticipant.aplicationSe
 import IParticipantRepository from "../repositories/participant.repository";
 import ParticipantDAO from "../../infrastructure/persistance/participantDAO";
 import GetAllParticipantsGroupAplicationService from "./getAllParticipantsGroup.aplicationService";
+import ChangeParticipantPermissionAplicationService from "./changeParticipantPermission.aplicationService";
+import ChangeParticipantPermissionDomainService from "../../domain/services/changeParticipantPermission.domainService";
+import ChangeParticipantPermissionPublisher from "../../../shared/aplication/publishers/changeParticipantPermissionPublisher";
 
 const groupRepository: IGroupRepository = new GroupDAO();
 const participantRepository: IParticipantRepository = new ParticipantDAO();
@@ -21,12 +24,14 @@ const createGroupAplicationService: CreateGroupAplicationService = CreateGroupAp
 const addLinkAplicationService: AddLinkAplicationService = AddLinkAplicationService.create(groupRepository, idGeneratorInfrastructureService, domainServices.addLinkDomainService);
 const createParticipantAplicationService: CreateParticipantAplicationService = CreateParticipantAplicationService.create(domainServices.createParticipantDomainService);
 const getAllParticipantsGroupAplicationService: GetAllParticipantsGroupAplicationService = GetAllParticipantsGroupAplicationService.create(groupRepository);
+const changeParticipantPermissionAplicationService: ChangeParticipantPermissionAplicationService = ChangeParticipantPermissionAplicationService.create(groupRepository, ChangeParticipantPermissionDomainService.create(ChangeParticipantPermissionPublisher.create()), participantRepository);
 
 const aplicationServices = {
     createGroupAplicationService,
     addLinkAplicationService,
     createParticipantAplicationService,
-    getAllParticipantsGroupAplicationService
+    getAllParticipantsGroupAplicationService,
+    changeParticipantPermissionAplicationService
 };
 
 export default aplicationServices;
